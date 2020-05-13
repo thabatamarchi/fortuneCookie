@@ -1,52 +1,40 @@
-import React, {Component} from 'react';
+import React, {useState} from 'react';
 import {View, Text, StyleSheet, TouchableOpacity, Image} from 'react-native';
 
-class App extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      textoFrase: '',
-      img: require('./img/biscoito.png'),
-    };
+const App = () => {
+  const [phrase, setPhrase] = useState('');
+  const [img, setImg] = useState(require('./img/biscoito.png'));
 
-    this.quebraBiscoito = this.quebraBiscoito.bind(this);
+  const frases = [
+    'Siga os bons e aprenda com eles.',
+    'O bom-senso vale mais do que muito conhecimento.',
+    'O riso é a menor distância entre duas pessoas.',
+    'Deixe de lado as preocupações e seja feliz.',
+    'Realize o óbvio, pense no improvável e conquiste o impossível.',
+    'Acredite em milagres, mas não dependa deles.',
+    'A maior barreira para o sucesso é o medo do fracasso.',
+  ];
 
-    this.frases = [
-      'Siga os bons e aprenda com eles.',
-      'O bom-senso vale mais do que muito conhecimento.',
-      'O riso é a menor distância entre duas pessoas.',
-      'Deixe de lado as preocupações e seja feliz.',
-      'Realize o óbvio, pense no improvável e conquiste o impossível.',
-      'Acredite em milagres, mas não dependa deles.',
-      'A maior barreira para o sucesso é o medo do fracasso.',
-    ];
-  }
+  const crackerCookie = () => {
+    let randomNumber = Math.floor(Math.random() * frases.length);
+    setPhrase(' "' + frases[randomNumber] + '" ');
+    setImg(require('./img/biscoitoAberto.png'));
+  };
 
-  quebraBiscoito() {
-    let numeroAleatorio = Math.floor(Math.random() * this.frases.length);
+  return (
+    <View style={styles.container}>
+      <Image source={img} style={styles.img} />
 
-    this.setState({
-      textoFrase: ' "' + this.frases[numeroAleatorio] + '" ',
-      img: require('./img/biscoitoAberto.png'),
-    });
-  }
+      <Text style={styles.textoFrase}>{phrase}</Text>
 
-  render() {
-    return (
-      <View style={styles.container}>
-        <Image source={this.state.img} style={styles.img} />
-
-        <Text style={styles.textoFrase}>{this.state.textoFrase}</Text>
-
-        <TouchableOpacity style={styles.botao} onPress={this.quebraBiscoito}>
-          <View style={styles.btnArea}>
-            <Text style={styles.btnTexto}>Quebrar Biscoito</Text>
-          </View>
-        </TouchableOpacity>
-      </View>
-    );
-  }
-}
+      <TouchableOpacity style={styles.botao} onPress={crackerCookie}>
+        <View style={styles.btnArea}>
+          <Text style={styles.btnTexto}>Quebrar Biscoito</Text>
+        </View>
+      </TouchableOpacity>
+    </View>
+  );
+};
 
 const styles = StyleSheet.create({
   container: {
